@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :job_keywords, except: [:new, :edit], shallow: true
+  resources :keywords, except: [:new, :edit], shallow: true
+  resources :locations, except: [:new, :edit], shallow: true
+  resources :jobs, except: [:new, :edit], shallow: true
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

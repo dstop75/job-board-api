@@ -11,9 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150326162357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "job_keywords", force: :cascade do |t|
+    t.integer  "job_id"
+    t.integer  "keyword_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "job_keywords", ["job_id"], name: "index_job_keywords_on_job_id", using: :btree
+  add_index "job_keywords", ["keyword_id"], name: "index_job_keywords_on_keyword_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "company"
+    t.integer  "job_category"
+    t.integer  "job_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "location_id"
+  end
+
+  add_index "jobs", ["location_id"], name: "index_jobs_on_location_id", using: :btree
+
+  create_table "keywords", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "city"
+    t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "job_keywords", "jobs"
+  add_foreign_key "job_keywords", "keywords"
+  add_foreign_key "jobs", "locations"
 end
